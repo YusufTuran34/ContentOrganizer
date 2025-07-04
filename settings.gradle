@@ -1,0 +1,16 @@
+rootProject.name = 'content-organizer'
+
+include 'test-app'
+include 'services:ai-chat-service'
+include 'services:music-creator-service'
+include 'services:flow-runner'
+include 'services:youtube-service'
+include 'services:twitter-service'
+include 'services:video-creator-service'
+include 'services:content-service'
+include 'services:media-service'
+include 'services:orchestration-service'
+include 'services:user-service'
+
+include 'shared:shared-dto'
+include 'shared:shared-utils' 

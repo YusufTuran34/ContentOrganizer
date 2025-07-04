@@ -1,18 +1,15 @@
 server:
-  port: 8085
+  port: 8080
   servlet:
-    context-path: /api/v1/twitter
+    context-path: /api/v1/flow-runner
 
 spring:
   application:
-    name: twitter-service
-
-# Twitter API Configuration
-twitter:
-  api-key: ${TWITTER_API_KEY}
-  api-secret: ${TWITTER_API_SECRET}
-  access-token: ${TWITTER_ACCESS_TOKEN}
-  access-token-secret: ${TWITTER_ACCESS_TOKEN_SECRET}
+    name: flow-runner
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration
 
 management:
   endpoints:
@@ -25,7 +22,7 @@ management:
 
 logging:
   level:
-    com.contentorganizer.twitter: DEBUG
+    com.contentorganizer.flowrunner: DEBUG
     org.springframework.web: INFO
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
@@ -36,3 +33,4 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
     operations-sorter: method 
+ 

@@ -6,15 +6,6 @@ server:
 spring:
   application:
     name: ai-chat-service
-  profiles:
-    active: dev
-  data:
-    mongodb:
-      host: ${SPRING_DATA_MONGODB_HOST:localhost}
-      port: ${SPRING_DATA_MONGODB_PORT:27017}
-      database: ${SPRING_DATA_MONGODB_DATABASE:ai_chat_service_db}
-      username: ${SPRING_DATA_MONGODB_USERNAME:}
-      password: ${SPRING_DATA_MONGODB_PASSWORD:}
 
 # OpenAI Configuration
 openai:
