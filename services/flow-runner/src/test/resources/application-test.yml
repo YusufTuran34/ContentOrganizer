@@ -1,0 +1,33 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: flow_runner_test_db
+
+logging:
+  level:
+    com.contentorganizer.flowrunner: DEBUG
+    org.springframework.web: WARN
+    org.springframework.data.mongodb: WARN
+    org.quartz: WARN
+
+flow-runner:
+  execution:
+    default-timeout-seconds: 30
+    max-concurrent-executions: 2
+    enable-retry: false
+  scheduler:
+    enabled: false
+    auto-start: false
+  storage:
+    yaml-directory: ./test-flows
+    backup-enabled: false
+
+services:
+  ai-chat-service:
+    base-url: http://localhost:8083/api/v1/aichat
+  music-creator-service:
+    base-url: http://localhost:8082/api/v1/music
+  video-creator-service:
+    base-url: http://localhost:8081/api/v1/runml 

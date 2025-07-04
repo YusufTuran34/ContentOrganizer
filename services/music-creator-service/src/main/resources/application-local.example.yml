@@ -1,0 +1,69 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /api/v1/music
+
+spring:
+  application:
+    name: music-creator-service
+  profiles:
+    active: local
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: music_creator_db
+      username: your-local-username
+      password: your-local-password
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+# Jamendo API Configuration
+jamendo:
+  base-url: https://api.jamendo.com/v3.0
+  client-id: "your-local-jamendo-client-id"
+  client-secret: "your-local-jamendo-client-secret"
+  enabled: true
+  default-limit: 100
+  default-audio-format: mp31
+  default-license: by
+  timeout-seconds: 30
+
+# Music Storage Configuration
+music:
+  storage:
+    base-directory: /tmp/music
+    max-file-size: 50MB
+    allowed-formats: mp3,wav,flac,m4a
+  processing:
+    max-concurrent-downloads: 5
+    download-timeout-minutes: 10
+
+# Logging Configuration
+logging:
+  level:
+    com.contentorganizer.music: DEBUG
+    org.springframework.data.mongodb: DEBUG
+    org.springframework.web.reactive: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+# Management/Actuator Configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+
+# SpringDoc OpenAPI Configuration
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method 

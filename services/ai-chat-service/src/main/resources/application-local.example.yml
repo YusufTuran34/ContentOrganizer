@@ -1,0 +1,46 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /api/v1/ai-chat
+
+spring:
+  application:
+    name: ai-chat-service
+  profiles:
+    active: local
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: ai_chat_service_db
+      username: your-local-username
+      password: your-local-password
+
+openai:
+  api-key: "your-local-openai-api-key"
+  model: "gpt-4"
+  max-tokens: 2000
+  temperature: 0.7
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    com.contentorganizer.aichat: DEBUG
+    org.springframework.web: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method 

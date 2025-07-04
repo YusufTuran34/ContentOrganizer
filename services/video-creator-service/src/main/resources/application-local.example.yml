@@ -1,0 +1,74 @@
+spring:
+  application:
+    name: video-creator-service
+  profiles:
+    active: local
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: video_creator_service_db
+      username: your-local-username
+      password: your-local-password
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+      enabled: true
+
+server:
+  port: 8083
+  servlet:
+    context-path: /api/v1/video
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    com.contentorganizer.runml: DEBUG
+    org.springframework.web: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+# File Upload Configuration
+file-upload:
+  base-path: /tmp/videos
+  max-file-size: 1073741824
+  allowed-extensions: mp4,avi,mov,mkv,webm
+
+# Higgsfield API Configuration
+higgsfield:
+  api-key: "your-local-higgsfield-api-key"
+  base-url: https://api.higgsfieldapi.com
+  timeout-seconds: 120
+  enabled: true
+  video-defaults:
+    duration: 10
+    style: realistic
+    resolution: 1080p
+    aspect-ratio: "16:9"
+    fps: 30
+  retry:
+    max-attempts: 3
+    delay-millis: 1000
+    multiplier: 2.0
+
+# Runway API Configuration
+runway:
+  api-key: "your-local-runway-api-key"
+  base-url: https://api.runwayml.com/v1
+  timeout-seconds: 300
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method 

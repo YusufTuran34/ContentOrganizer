@@ -1,0 +1,68 @@
+server:
+  port: 8084
+  servlet:
+    context-path: /api/v1/youtube
+
+spring:
+  application:
+    name: youtube-service
+  profiles:
+    active: local
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: youtube_service_db
+      username: your-local-username
+      password: your-local-password
+
+# YouTube Configuration
+youtube:
+  google:
+    client-id: "your-local-google-client-id"
+    client-secret: "your-local-google-client-secret"
+    refresh-token: "your-local-google-refresh-token"
+  stream:
+    key: "your-local-youtube-stream-key"
+    rtmp-url: "rtmp://a.rtmp.youtube.com/live2"
+    timeout-seconds: 120
+    ffmpeg-path: "ffmpeg"
+    default-resolution: "1920x1080"
+    default-fps: 30
+    default-bitrate: 4000
+    default-audio-codec: "aac"
+    default-video-codec: "libx264"
+  upload:
+    max-file-size: 10737418240  # 10GB
+    allowed-formats: mp4,avi,mov,mkv,webm
+  retry:
+    max-attempts: 3
+    delay-millis: 1000
+    multiplier: 2.0
+
+# Logging
+logging:
+  level:
+    com.contentorganizer.youtube: DEBUG
+    org.springframework.web: INFO
+    org.springframework.data.mongodb: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+# Management endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+# OpenAPI/Swagger
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method 

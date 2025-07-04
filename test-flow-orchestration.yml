@@ -1,0 +1,81 @@
+name: "Test Video Creation Flow"
+description: "Test flow for video creation orchestration"
+version: "1.0"
+enabled: true
+
+trigger:
+  type: "MANUAL"
+
+globalVariables:
+  videoTitle: "AI Generated Test Video"
+  videoDescription: "This is a test video created by AI orchestration"
+
+steps:
+  - id: "step1"
+    name: "Generate AI Content"
+    type: "SERVICE_CALL"
+    continueOnFailure: false
+    serviceCall:
+      serviceName: "ai-chat-service"
+      endpoint: "/chat/quick"
+      method: "POST"
+      headers:
+        Content-Type: "application/json"
+      body: |
+        {
+          "prompt": "5 dakikalık YouTube videosu için başlık, açıklama ve paylaşım tweeti üret. Konu: Yapay Zeka ile Otomatik Video Üretimi. Başlık, açıklama ve tweet ayrı ayrı ver."
+        }
+    variables:
+      outputKey: "aiContent"
+    nextStepId: "step2"
+
+  - id: "step2"
+    name: "Search Music"
+    type: "SERVICE_CALL"
+    continueOnFailure: false
+    serviceCall:
+      serviceName: "music-creator-service"
+      endpoint: "/search"
+      method: "POST"
+      headers:
+        Content-Type: "application/json"
+      body: |
+        {
+          "tags": ["lofi"],
+          "targetDuration": 300
+        }
+    variables:
+      outputKey: "musicSearch"
+    nextStepId: "step3"
+
+  - id: "step3"
+    name: "Upload Test Video"
+    type: "SERVICE_CALL"
+    continueOnFailure: false
+    serviceCall:
+      serviceName: "youtube-service"
+      endpoint: "/upload"
+      method: "POST"
+      headers:
+        Content-Type: "application/json"
+      body: |
+        {
+          "videoPath": "/Users/yusuf-mini/Desktop/ContentCreator/ContentOrganizer/test_5min_video.mp4",
+          "title": "{{aiContent.title}}",
+          "description": "{{aiContent.description}}"
+        }
+    variables:
+      outputKey: "youtubeUpload"
+    nextStepId: "step4"
+
+  - id: "step4"
+    name: "Log Results"
+    type: "LOG"
+    variables:
+      message: "Flow completed successfully. YouTube Video ID: {{youtubeUpload.videoId}}"
+    nextStepId: null
+
+defaultRetryPolicy:
+  maxAttempts: 3
+  initialDelayMs: 1000
+  strategy: FIXED_DELAY 

@@ -1,0 +1,63 @@
+server:
+  port: 8085
+  servlet:
+    context-path: /api/v1/twitter
+
+spring:
+  application:
+    name: twitter-service
+  profiles:
+    active: dev
+  data:
+    mongodb:
+      host: ${SPRING_DATA_MONGODB_HOST:localhost}
+      port: ${SPRING_DATA_MONGODB_PORT:27017}
+      database: ${SPRING_DATA_MONGODB_DATABASE:twitter_service_db}
+      username: ${SPRING_DATA_MONGODB_USERNAME:}
+      password: ${SPRING_DATA_MONGODB_PASSWORD:}
+
+# Twitter Configuration
+twitter:
+  api:
+    key: ${TWITTER_API_KEY}
+    secret: ${TWITTER_API_SECRET}
+    access-token: ${TWITTER_ACCESS_TOKEN}
+    access-token-secret: ${TWITTER_ACCESS_TOKEN_SECRET}
+  oauth:
+    client-id: ${TWITTER_CLIENT_ID}
+    client-secret: ${TWITTER_CLIENT_SECRET}
+    auth-code: ${TWITTER_AUTH_CODE}
+    code-verifier: ${TWITTER_CODE_VERIFIER}
+    redirect-uri: ${TWITTER_REDIRECT_URI:http://localhost:8085/api/v1/twitter/oauth/callback}
+  user:
+    username: ${TWITTER_USERNAME}
+  retry:
+    max-attempts: 3
+    delay-millis: 1000
+    multiplier: 2.0
+
+# Logging
+logging:
+  level:
+    com.contentorganizer.twitter: DEBUG
+    org.springframework.web: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+# Management endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+# OpenAPI/Swagger
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method 

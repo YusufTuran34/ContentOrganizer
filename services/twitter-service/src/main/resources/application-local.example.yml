@@ -1,0 +1,63 @@
+server:
+  port: 8085
+  servlet:
+    context-path: /api/v1/twitter
+
+spring:
+  application:
+    name: twitter-service
+  profiles:
+    active: local
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: twitter_service_db
+      username: your-local-username
+      password: your-local-password
+
+# Twitter Configuration
+twitter:
+  api:
+    key: "your-local-twitter-api-key"
+    secret: "your-local-twitter-api-secret"
+    access-token: "your-local-twitter-access-token"
+    access-token-secret: "your-local-twitter-access-token-secret"
+  oauth:
+    client-id: "your-local-twitter-client-id"
+    client-secret: "your-local-twitter-client-secret"
+    auth-code: "your-local-twitter-auth-code"
+    code-verifier: "your-local-twitter-code-verifier"
+    redirect-uri: "http://localhost:8085/api/v1/twitter/oauth/callback"
+  user:
+    username: "your-local-twitter-username"
+  retry:
+    max-attempts: 3
+    delay-millis: 1000
+    multiplier: 2.0
+
+# Logging
+logging:
+  level:
+    com.contentorganizer.twitter: DEBUG
+    org.springframework.web: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+# Management endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+# OpenAPI/Swagger
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method 
